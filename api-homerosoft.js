@@ -387,32 +387,124 @@ async function generar() {
 
                 // Construir el HTML final
                 let htmlFinal = `
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Powered by Homero Software</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<style>
+.post-header {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  background: #111 !important;
+  padding: 20px !important;
+  border-radius: 10px !important;
+  color: #fff !important;
+  gap: 20px !important;
+  font-family: Arial, sans-serif !important;
+}
+
+.image-and-btn {
+  display: flex !important;
+  gap: 15px !important;
+  align-items: flex-start !important;
+  width: 100% !important;
+}
+
+.poster-img {
+  width: 175px !important;
+  height: auto !important;
+  border-radius: 10px !important;
+  object-fit: cover !important;
+}
+
+.post-header__info {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  gap: 6px !important;
+  min-width: 150px !important;
+  color: #ccc !important;
+  font-size: 14px !important;
+}
+
+.post-header__info h1 {
+  font-size: 20px !important;
+  margin: 0 !important;
+  color: #fff !important;
+}
+
+.post-header__info ul {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  list-style: none !important;
+  gap: 4px !important;
+  font-size: 14px !important;
+  color: #ccc !important;
+}
+
+.tmdb-rate i {
+  color: #f5c518 !important;
+  margin-right: 5px !important;
+}
+
+.tmdb-rate {
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+}
+
+.resume {
+  width: 100% !important;
+  font-size: 14px !important;
+  margin-top: 15px !important;
+  color: #ccc !important;
+}
+
+.fav-js {
+  display: none !important;
+}
+
+/* Íconos para temporadas y año */
+.info-item {
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+}
+
+.info-item i {
+  color: #ccc !important;
+  font-size: 14px !important;
+}
+</style>
+</head>
+<body>
+
 <div class="post-header">
-                <div class="filter">
-                <div class="background-image" style="background-image: url(https://image.tmdb.org/t/p/w500${serieData.backdrop_path});"></div>
-                        </div>
-                <div class="image-and-btn">
-                <img src="https://media.themoviedb.org/t/p/w440_and_h660_face/${serieData.poster_path}" class="poster-img" alt="" />
-                <div class="fav-js">
+  <div class="image-and-btn">
+    <img src="https://media.themoviedb.org/t/p/w440_and_h660_face/${serieData.poster_path}" class="poster-img" alt="${serieData.name || serieData.title}" />
+    <div class="post-header__info"><br>
       <button class="bs-favs" card-id="${serieData.id}" id="add-btn" style="display: none;"></button>
       <button class="delete-btn none-btn" card-id="${serieData.id}" id="remove-btn" style="display: none;"></button>
-                </div>
-                </div>
-                
-                <div class="post-header__info">
-                <ul>
-                <li class="tmdb-rate"><i class="fa-solid fa-star"></i> ${serieData.vote_average.toFixed(1)}</li>
-                <li>${serieData.number_of_seasons + genSeasonsCount}</li>
-                <li>${serieData.first_air_date.slice(0, 4)}</li>
-                </ul>
-                <p class="resume">${serieData.overview}</p>
-                <div class="more-data">
-                <p>Género: ${serieData.genres.map(genre => genre.name).join(', ')}</p>
-                <p>Uploaded by: Homero</p>
-                </div>
-                </div>
-                </div>
-                <!-- Ventana Modal Video -->
+      <ul>
+        <li class="tmdb-rate"><i class="fa-solid fa-star"></i> ${serieData.vote_average.toFixed(1)}</li><br>
+        <li class="info-item"><i class="fa-regular fa-calendar"></i><span> ${serieData.first_air_date ? serieData.first_air_date.slice(0, 4) : 'N/A'}</span></li><br>
+        <li class="info-item"><i class="fa-solid fa-layer-group"></i> ${serieData.number_of_seasons} Temporada${serieData.number_of_seasons > 1 ? 's' : ''}</li><br>
+        <li class="info-item"><i class="fas fa-bolt fa-beat" style="color: #FFFF00;"></i> TurboPlay</li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="resume">
+    ${serieData.overview}
+  </p>
+</div>
+<!-- Ventana Modal Video -->
                 <div id="myModal" class="modal-videos">
                 <div class="modal-content-videos" id="transmitirEpisode">
                 <span id="closeModal" onclick="closeModal">&times;</span>
